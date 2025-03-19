@@ -4,11 +4,11 @@
 </p>
 
 #### *In this tutorial, we will:*
-*- Outline the process for setting up virtual machines.*
+*•	Set up virtual machines with resilience across availability zones.*
 
-*- Deploy virtual machines.*
+*•	Deploy virtual machines using the Azure portal.*
 
-*- Configure availability features for virtual machines, including scaling options.*
+*•	Configure availability and scaling features for virtual machines.*
 
 #### Tasks:
  1. Deploy Azure virtual machines with zone resilience using the Azure portal.
