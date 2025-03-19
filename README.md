@@ -18,11 +18,24 @@
 
 ## Task 1: Deploy Azure virtual machines with zone resilience using the Azure portal.
 
-In this task, you will create two Azure virtual machines and distribute them across different availability zones using the Azure portal. Availability zones ensure maximum uptime, offering a 99.99% SLA. To meet this requirement, you need to deploy at least two VMs in separate zones.
+Deploy two Azure virtual machines (VMs) across different availability zones using the Azure portal. Availability zones (isolated locations within a region) ensure maximum uptime, offering a 99.99% SLA when at least two VMs are deployed in separate zones.
 
-1.	Search for and select "Virtual machines", on the Virtual machines blade, click "+ Create", and then select in the drop-down "Azure virtual machine".
-2.	On the Basics tab, in the Availability zone drop down menu, place a checkmark next to Zone 2. This should select both "Zone 1" and "Zone 2".
-3.	On the Basics tab, complete the following settings: Subscription, Resource group, Virtual machine names (Edit names after selecting availability zones), Region, Availability options, Availability zone, Security type, Image, Azure Spot instance, Size (in this case a DS2_V3), Username, Password, Public inbound ports.
+1.	In the Azure portal, search for and select "Virtual machines".
+2.	On the "Virtual machines" blade, click "+ Create", then select "Azure virtual machine" from the drop-down menu.
+3.	On the "Basics" tab, configure the following settings:
+    -  Subscription: Select your subscription.
+    -  Resource group: Choose or create a resource group.
+    -  Virtual machine names: Enter names for two VMs (e.g., "VM1" and "VM2") after selecting availability zones.
+    -  Region: Select your preferred region (e.g., "(US) East US").
+    -  Availability options: Choose "Availability zone".
+    -  Availability zone: Check "Zone 1" and "Zone 2" to distribute the VMs.
+    -  Security type: Select the default or your preferred option.
+    -  Image: Choose an OS image (e.g., "Windows Server 2022").
+    -  Azure Spot instance: Set to "No" (unless using Spot VMs).
+    -  Size: Select "Standard_DS2_v3" (or another size as needed).
+    -  Username: Enter an admin username.
+    -  Password: Enter a strong password.
+    -  Public inbound ports: Select "Allow selected ports" (e.g., RDP - 3389).
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/baf4cb5d-fb53-452f-a9c5-c1772028df68">
@@ -32,13 +45,21 @@ In this task, you will create two Azure virtual machines and distribute them acr
   <img src="https://github.com/user-attachments/assets/941c497c-f999-4552-af0c-bb8f10e441bb">
 </p>
 
-4.   Click "Next: Disks >", then configure: OS disk type, Delete with VM (this helps save costs, simplifies resource management, and ensures a clean environment by automatically removing unused disks).
+4.	Click "Next: Disks >".
+5.	On the "Disks" tab, configure:
+    -  OS disk type: Select "Standard SSD" (or another type as needed).
+    -  Delete with VM: Check this box to automatically remove disks when the VM is deleted (saves costs and simplifies cleanup).
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e70ae714-eb0f-4d2e-8693-05911ef0913e">
 </p>
 
-5.  Click "Next: Networking >", take the default values except for: Delete public IP and NIC when the VM is deleted (this helps save costs, enhances security, and keeps your Azure environment clean). Click "Review + Create". After validation completes, click "Create". Note: Notice as the virtual machine deploys the NIC, disk, and public IP address (if configured) are independently created and managed resources. Wait for the deployment to complete, then select "Go to resource".
+6.	Click "Next: Networking >".
+7.	On the "Networking" tab, accept the default values except:
+    -  Delete public IP and NIC when VM is deleted: Check this box to remove associated resources when the VM is deleted (enhances security and reduces costs).
+8.	Click "Review + Create". After validation passes, click "Create".
+9.	Wait for the deployment to complete. (Note: The NIC, disk, and public IP address, if configured, are created as independent resources.)
+10.	Once deployment finishes, click "Go to resource" to view the VM.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8112c040-3fd3-4d1f-9aa4-2ec7e2ca09e1">
@@ -46,52 +67,78 @@ In this task, you will create two Azure virtual machines and distribute them acr
 
 ## Task 2: Manage scaling for compute and storage resources in virtual machines.
 
-In this task, you will resize a virtual machine by selecting a different SKU. Azure allows you to adjust VM specifications as needed, increasing or decreasing compute power and memory. This flexibility also applies to storage, where you can enhance disk performance or expand capacity.
+Resize a virtual machine by changing its SKU (Stock Keeping Unit, defining compute power and memory) and adjust storage by adding and modifying a data disk. Azure allows flexible scaling of compute and storage resources as needed.
 
-1. On the VM1 virtual machine, in the Availability + scale blade, select "Size".
-2. Set the virtual machine size to DS1_v2 and click "Resize". When prompted, confirm the change. Note: Resizing is also known as vertical scaling, up or down.
+1.	Navigate to the "VM1" virtual machine created in Task 1.
+2.	In the "Availability + scale" blade, select "Size".
+3.	Set the virtual machine size to "Standard_DS1_v2", then click "Resize". Confirm the change when prompted. (Note: Resizing, or vertical scaling, adjusts compute power up or down.)
 
 <p align="center">
  <img src="https://github.com/user-attachments/assets/9d8b1764-ed3a-4d4d-b5e8-42e149cce19c">
 </p>
 
-3. In the Settings area, select "Disks".
-4.	Under Data disks select "+ Create" and "attach a new disk". Configure the settings and click "Apply" (leave other settings at their default values): Disk name, Storage type (in this case Standard HDD), Size.
+4.	In the "Settings" area, select "Disks".
+5.	Under "Data disks", click "+ Create and attach a new disk".
+6.	Configure the new disk settings, then click "Apply":
+    -  Disk name: Enter a name (e.g., "VM1-DataDisk").
+    -  Storage type: Select "Standard HDD".
+    -  Size: Choose a size (e.g., 32 GiB). Leave other settings at default values.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/84cfe70c-8ad6-4195-8474-951f2f89c7c7">
 </p>
 
-5.	After the disk has been created, click "Detach" (if necessary, scroll to the right to view the detach icon), and then click "Apply". Note: Detaching removes the disk from the VM but keeps it in storage for later use.
-6.	Search for and select "Disks". From the list of disks, select the VM1 disk object. Note: The Overview blade also provides performance and usage information for the disk.
-7.	In the Settings blade, select "Size + performance". Set the storage type to Standard SDD, and then click "Save".
+7.	After the disk is created, click "Detach" (scroll right to find the detach icon if needed), then click "Apply". (Note: Detaching removes the disk from the VM but retains it in storage.)
+8.	Search for and select "Disks" in the Azure portal.
+9.	From the list of disks, select the VM1 disk object. (Note: The Overview blade shows performance and usage details.)
+10.	In the "Settings" blade, select "Size + performance".
+11.	Change the storage type to "Standard SSD", then click "Save".
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e56b3395-841c-4495-b1cb-4bf5d1fd4dd0">
 </p>
 
-8.	Navigate back to the VM1 virtual machine and select "Disks".
-9.	In the Data disk section, select "Attach existing disks".
-10.	In the Disk name drop-down, select the VM1 disk.
+12.	Navigate back to the "VM1" virtual machine and select "Disks".
+13.	In the "Data disks" section, click "Attach existing disks".
+14.	In the "Disk name" drop-down, select the VM1 disk, then click "Apply".
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/37d03ee3-b730-4acf-9fe3-916bae383f14">
 </p>
 
-11.	Verify the disk is now different. Select "Apply" to save your changes. Note: You have now created a virtual machine, scaled the SKU and the data disk size. In the next task we use Virtual Machine Scale Sets to automate the scaling process.
+15.	Verify the disk is attached with the updated "Standard SSD" type. (Note: You’ve now scaled the VM’s SKU and data disk.)
 
 ## Task 3: Set up and configure Azure Virtual Machine Scale Sets.
 
-In this task, you will set up an Azure virtual machine scale set spanning multiple availability zones. VM Scale Sets streamline automation by letting you define scaling rules based on metrics, enabling automatic expansion or reduction of resources.
+Set up an Azure Virtual Machine Scale Set (VMSS), which automates scaling across multiple VMs in availability zones based on defined rules.
 
-1. In the Azure portal, search for and select "Virtual machine scale sets" and, on the Virtual machine scale sets blade, click "+ Create".
-2. On the Basics tab of the Create a virtual machine scale set blade, configure the following settings: Subscription, Resource group, Virtual machine scale set name, Region, Availability zone, Orchestration mode, Security type, Scaling options, Image, Size, Username, Password. Then, go to Networking.
+1.	In the Azure portal, search for and select "Virtual machine scale sets".
+2.	On the "Virtual machine scale sets" blade, click "+ Create".
+3.	On the "Basics" tab of the "Create a virtual machine scale set" blade, configure:
+    -  Subscription: Select your subscription.
+    -  Resource group: Choose or create a resource group.
+    -  Virtual machine scale set name: Enter a name (e.g., "VMSS1").
+    -  Region: Select your preferred region (e.g., "(US) East US").
+    -  Availability zone: Check "Zone 1" and "Zone 2".
+    -  Orchestration mode: Select "Uniform".
+    -  Security type: Use the default or your preferred option.
+    -  Scaling options: Select "Manual" (adjusted in Task 4).
+    -  Image: Choose an OS image (e.g., "Windows Server 2022").
+    -  Size: Select a size (e.g., "Standard_DS2_v3").
+    -  Username: Enter an admin username.
+    -  Password: Enter a strong password.
  
 <p align="center">
  <img src="https://github.com/user-attachments/assets/e8ec0300-c2b4-410a-a151-030892531d3d">
 </p>
 
- 3. On the Networking page, click the "Edit virtual network" link below the Virtual network textbox and create a new virtual network, when finished, select "OK": Network Name, Address range	10.82.0.0/20, Subnetwork name, Subnet range	10.82.0.0/24.
+4.	Click "Next: Networking >".
+5.	On the "Networking" tab, click "Edit virtual network" below the "Virtual network" textbox.
+6.	Create a new virtual network, then click "OK":
+    -  Network Name: Enter a name (e.g., "VMSS-VNet").
+    -  Address range: Set to "10.82.0.0/20".
+    -  Subnet name: Enter "default".
+    -  Subnet range: Set to "10.82.0.0/24".
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/d30e10e3-41db-4983-87de-9c42417a2e22">
@@ -101,30 +148,41 @@ In this task, you will set up an Azure virtual machine scale set spanning multip
  <img src="https://github.com/user-attachments/assets/4be42df2-082d-4d96-ae20-70d79f5e46e2">
 </p>
 
-4. In the Networking tab, click the "Edit network interface" icon to the right of the network interface entry.
-5. For NIC network security group section, select "Advanced" and then click "Create new" under the Configure network security group drop-down list.
+7.	Click the "Edit network interface" icon next to the network interface entry.
+8.	In the "NIC network security group" section, select "Advanced", then click "Create new" under the "Configure network security group" drop-down.
 
  <p align="center">
  <img src="https://github.com/user-attachments/assets/1c450a62-5aa9-4a82-ac0c-cac37b17dbf8">
 </p>
 
-6. On the Create network security group blade, specify the name (leave others with their default values).
-7. Click "Add an inbound rule" and configure: Source (Any), Source port ranges (*), Destination (Any), Service (HTTP), Action (Allow), Priority (1010), Name (allow-http), then save the rule.
+9.	On the "Create network security group" blade, enter a name (e.g., "VMSS-NSG"), then click "Add an inbound rule", configure:
+    -  Source: "Any".
+    -  Source port ranges: "*".
+    -  Destination: "Any".
+    -  Service: "HTTP".
+    -  Action: "Allow".
+    -  Priority: "1010".
+    -  Name: "allow-http".
+    -  Click "Add"
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/430f0720-29f4-45c6-b052-df9e90028145">
 </p>
  
-8. Click "Add" and, back on the Create network security group blade, click "OK".
-9. In the Edit network interface blade, in the Public IP address section, click "Enabled" and click "OK".
-10. In the Networking tab, under the Load balancing section, configure: Load balancing options (Azure load balancer), Select a load balancer (Create a load balancer).
-11. On the Create a load balancer page, specify the load balancer name and take the defaults. Click "Create", when you are done then "Next : Management >".
+10.	On the "Create network security group" blade, click "OK".
+11.	In the "Edit network interface" blade, under "Public IP address", click "Enabled", then click "OK".
+12.	On the "Networking" tab, under "Load balancing", configure:
+    -  Load balancing options: Select "Azure load balancer".
+    -  Select a load balancer: Click "Create a load balancer".
+13.	On the "Create a load balancer" page, enter a name (e.g., "VMSS-LB"), accept defaults, and click "Create".
+14.	Click "Next: Management >".
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/8a31b3b9-be4b-4a6f-a697-a6903dd9d50d">
 </p>
  
- 12. In the Management tab, set Boot diagnostics to Disable (this saves storage costs and reduces the amount of data stored in your Azure account), then click "Review + Create", ensure validation passes, and click "Create". Note: Wait for the virtual machine scale set deployment to complete. This should take approximately 5 minutes.
+15.	On the "Management" tab, set "Boot diagnostics" to "Disable" (saves storage costs), then click "Review + Create".
+16.	After validation passes, click "Create". Wait for the deployment to complete (approximately 5 minutes).
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/35bba938-933b-45a1-9783-c460f0d0c892">
@@ -136,33 +194,52 @@ In this task, you will set up an Azure virtual machine scale set spanning multip
 
 ## Task 4: Adjust the scaling of Azure Virtual Machine Scale Sets.
 
-In this task, you will modify the scale set by applying a custom scaling rule to adjust resource allocation dynamically.
+Modify the VM Scale Set by adding custom scaling rules to dynamically adjust resource allocation based on CPU usage.
 
-1.	Select "Go to resource" or search for and select the scale set created before.
-2.	Choose "Availability + Scale" from the left side menu, then choose "Scaling". In this case a Scale out rule.
-3.	Select "Custom autoscale". Then change the Scale mode to "Scale based on metric". And then select "Add a rule".
+1.	Navigate to the VM Scale Set created in Task 3 (e.g., "VMSS1") by clicking "Go to resource" or searching for it.
+2.	In the left menu, select "Availability + Scale", then click "Scaling".
+3.	Choose "Custom autoscale", then set "Scale mode" to "Scale based on a metric".
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/40331034-35f8-48ee-ab1a-1c1f22fc64a7">
 </p>
 
-4.	Create a rule to automatically scale out VM instances when the average CPU load exceeds 70% over 10 minutes, increasing instances by 20%. Configure: Metric source, Metric namespace (Virtual Machine Host), Metric name (Percentage CPU), Operator (Greater than), Metric threshold (70), Duration (10 minutes), Time grain statistic (Average), Operation (Increase percent by), Cool down (5 minutes), Percentage (50).
-5.	Be sure to Add then Save your changes.
+4.	Click "Add a rule" to create a scale-out rule. Configure the rule to increase VM instances by 20% when the average CPU load exceeds 70% over 10 minutes:
+    -  Metric source: Current resource.
+    -  Metric namespace: "Virtual Machine Host".
+    -  Metric name: "Percentage CPU".
+    -  Operator: "Greater than".
+    -  Metric threshold: "70".
+    -  Duration: "10 minutes".
+    -  Time grain statistic: "Average".
+    -  Operation: "Increase percent by".
+    -  Percentage: "20".
+    -  Cool down: "5 minutes".
+    -  Click "Add".
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/fb366df5-451c-4437-9455-1d983c001404">
 </p>
 
-6.	Create a scale-in rule to decrease the number of VM instances when the average CPU load drops below 30% over a 10-minute period, reducing instances by 20%. Select "Add a rule", configure: Operator (Less than), Threshold (30), Operation (Decrease percentage by), Percentage (20), then click "Add". Be sure to Save your changes.
+5.	Click "Add a rule" to create a scale-in rule. Configure the rule to decrease VM instances by 20% when the average CPU load drops below 30% over 10 minutes:
+    -  Operator: "Less than".
+    -  Threshold: "30".
+    -  Operation: "Decrease percent by".
+    -  Percentage: "20".
+    -  Click "Add".
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/05646fd7-c109-46c2-8c7f-2532efd324dd">
 </p>
 
-7.	Set the instance limits to ensure autoscale rules don't exceed the maximum or minimum instances. Configure: Minimum (2), Maximum (10), Default (2). These limits are shown on the Scaling page after the rules. Be sure to Save your changes.
+6.	Set instance limits on the "Scaling" page:
+    -  Minimum: "2".
+    -  Maximum: "10".
+    -  Default: "2".
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/0d286a67-b948-4d70-9cb7-66eabd21ed3e">
 </p>
 
-8.	To monitor the number of virtual machine instances select "Instances" on the scale set page.
+7.	Click "Save" to apply the scaling rules and limits.
+8.	To monitor the number of VM instances, select "Instances" on the scale set page.
